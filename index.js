@@ -14,26 +14,29 @@ export default class DeviceMonitor extends Component {
   static propTypes = {
     children: PropTypes.node,
     onAppState: PropTypes.func,
+    onConnectivityChange: PropTypes.func,
     onKeyboard: PropTypes.func,
     onNetInfo: PropTypes.func,
     onViewport: PropTypes.func,
   };
 
-  defaultProps = {
+  static defaultProps = {
     onAppState: () => {},
+    onConnectivityChange: () => {},
     onKeyboard: () => {},
     onNetInfo: () => {},
     onViewport: () => {},
   };
 
   componentDidMount() {
-    console.log('$props', this.props)
-
     AppState.addEventListener('change', this.onAppState)
     this.onAppState(AppState.currentState)
 
     NetInfo.addEventListener('change', this.onNetInfo)
     NetInfo.fetch().done((netInfo) => this.onNetInfo(netInfo))
+
+    NetInfo.isConnected.addEventListener('change', this.onConnectivityChange)
+    NetInfo.isConnected.fetch().done(this.onConnectivityChange)
 
     this._keyboardDidHide = DeviceEventEmitter.addListener('keyboardDidHide', () => this.onKeyboard(false))
     this._keyboardDidShow = DeviceEventEmitter.addListener('keyboardDidShow', (layout) => this.onKeyboard(true, layout))
@@ -41,15 +44,18 @@ export default class DeviceMonitor extends Component {
 
   componentWillUnmount() {
     AppState.removeEventListener('change', this.onAppState)
-
-    NetInfo.isConnected.removeEventListener('change', this.onNetInfo)
-
+    NetInfo.removeEventListener('change', this.onNetInfo)
+    NetInfo.isConnected.removeEventListener('change', this.onConnectivityChange)
     this._keyboardDidHide.remove()
     this._keyboardDidShow.remove()
   }
 
   onAppState = (appState) => {
     this.props.onAppState(appState)
+  };
+
+  onConnectivityChange = (isConnected) => {
+    this.props.onConnectivityChange(isConnected)
   };
 
   onNetInfo = (netInfo) => {
