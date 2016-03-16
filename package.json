@@ -1,11 +1,26 @@
 {
   "name": "react-native-device-monitor",
   "version": "1.0.0",
-  "description": "",
+  "description": "Monitor Device State",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "rt2zz <zack@root-two.com>",
+  "keywords": [
+    "react-native",
+    "device",
+    "keyboard",
+    "net-info",
+    "android",
+    "ios"
+  ],
+  "author": "Zack Story <zack@root-two.com> (https://github.com/rt2zz)",
+  "bugs": {
+    "url": "https://github.com/wildlifela/react-native-device-monitor/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wildlifela/react-native-device-monitor.git"
+  },
+  "homepage": "https://github.com/wildlifela/react-native-device-monitor",
   "license": "MIT"
 }
