@@ -1,17 +1,17 @@
 ## React Native Device Monitor
 Monitor device state in a react-native app without boilerplate.
+`npm install --save react-native-device-monitor`
 
 ### Basic Usage
-(assuming redux or similar)
 ```js
 render() {
   return (
     <DeviceMonitor
-      onAppState={this.props.actions.setAppState}
-      onKeyboard={this.props.actions.setKeyboardStatus}
-      onNetInfo={this.props.actions.setNetInfo}
-      onConnectivityChange={this.props.actions.setConnectivity}
-      onViewport={this.props.actions.setViewport}
+      onAppState={this.setAppState}
+      onKeyboard={this.setKeyboardStatus}
+      onNetInfo={this.setNetInfo}
+      onConnectivityChange={this.setConnectivity}
+      onViewport={this.setViewport}
       >
       <RestOfTheApp />
     </DeviceMonitor>
