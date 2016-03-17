@@ -1,5 +1,5 @@
 ## React Native Device Monitor
-Monitor device state in a react-native app without boilerplate.
+Monitor device state in a react-native app without boilerplate.  
 `npm install --save react-native-device-monitor`
 
 ### Basic Usage
