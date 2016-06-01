@@ -1,9 +1,8 @@
-import React, {
+import React, { Component, PropTypes } from 'react'
+import {
   AppState,
-  Component,
   DeviceEventEmitter,
   NetInfo,
-  PropTypes,
   View,
 } from 'react-native'
 
