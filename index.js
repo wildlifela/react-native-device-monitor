@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import {
   AppState,
   DeviceEventEmitter,
+  Keyboard,
   NetInfo,
   View,
 } from 'react-native'
@@ -37,8 +38,8 @@ export default class DeviceMonitor extends Component {
     NetInfo.isConnected.addEventListener('change', this.onConnectivityChange)
     NetInfo.isConnected.fetch().done(this.onConnectivityChange)
 
-    this._keyboardDidHide = DeviceEventEmitter.addListener('keyboardDidHide', () => this.onKeyboard(false))
-    this._keyboardDidShow = DeviceEventEmitter.addListener('keyboardDidShow', (layout) => this.onKeyboard(true, layout))
+    this._keyboardDidHide = Keyboard.addListener('keyboardDidHide', () => this.onKeyboard(false))
+    this._keyboardDidShow = Keyboard.addListener('keyboardDidShow', (layout) => this.onKeyboard(true, layout))
   }
 
   componentWillUnmount() {
@@ -69,7 +70,7 @@ export default class DeviceMonitor extends Component {
     let viewport = e.nativeEvent.layout
     let lastViewport = this._lastViewport
     if (lastViewport && (viewport.width !== lastViewport.width || viewport.height !== lastViewport.height)) {
-      this._viewport = viewport
+      this._lastViewport = viewport
       this.props.onViewport(viewport)
     }
   };
