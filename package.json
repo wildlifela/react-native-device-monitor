@@ -1,6 +1,6 @@
 {
   "name": "react-native-device-monitor",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Monitor Device State",
   "main": "index.js",
   "scripts": {
