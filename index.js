@@ -10,6 +10,7 @@ import {
 export default class DeviceMonitor extends Component {
 
   _lastViewport = null;
+  _hasReceivedConnection = false
 
   static propTypes = {
     children: PropTypes.node,
@@ -35,8 +36,10 @@ export default class DeviceMonitor extends Component {
     NetInfo.addEventListener('change', this.onNetInfo)
     NetInfo.fetch().done((netInfo) => this.onNetInfo(netInfo))
 
+    NetInfo.isConnected.fetch().done((isConnected) => {
+      this.onConnectivityChange(isConnected, { calledFromComponentDidMount: true })
+    })
     NetInfo.isConnected.addEventListener('change', this.onConnectivityChange)
-    NetInfo.isConnected.fetch().done(this.onConnectivityChange)
 
     this._keyboardDidHide = Keyboard.addListener('keyboardDidHide', () => this.onKeyboard(false))
     this._keyboardDidShow = Keyboard.addListener('keyboardDidShow', (layout) => this.onKeyboard(true, layout))
@@ -54,8 +57,11 @@ export default class DeviceMonitor extends Component {
     this.props.onAppState(appState)
   };
 
-  onConnectivityChange = (isConnected) => {
-    this.props.onConnectivityChange(isConnected)
+  onConnectivityChange = (isConnected, options = {}) => {
+    // On iOS, The fetch in componentDidMount resolves AFTER the callback from the 'change' event listener
+    // resulting in incorrect status being reported
+    if (!options.calledFromComponentDidMount || !this._hasReceivedConnection) this.props.onConnectivityChange(isConnected)
+    this._hasReceivedConnection = true
   };
 
   onNetInfo = (netInfo) => {
