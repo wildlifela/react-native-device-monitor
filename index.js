@@ -33,13 +33,13 @@ export default class DeviceMonitor extends Component {
     AppState.addEventListener('change', this.onAppState)
     this.onAppState(AppState.currentState)
 
-    NetInfo.addEventListener('change', this.onNetInfo)
-    NetInfo.fetch().done((netInfo) => this.onNetInfo(netInfo))
+    NetInfo.addEventListener('connectionChange', this.onNetInfo)
+    NetInfo.getConnectionInfo().done((netInfo) => this.onNetInfo(netInfo))
 
     NetInfo.isConnected.fetch().done((isConnected) => {
       this.onConnectivityChange(isConnected, { calledFromComponentDidMount: true })
     })
-    NetInfo.isConnected.addEventListener('change', this.onConnectivityChange)
+    NetInfo.isConnected.addEventListener('connectionChange', this.onConnectivityChange)
 
     this._keyboardDidHide = Keyboard.addListener('keyboardDidHide', () => this.onKeyboard(false))
     this._keyboardDidShow = Keyboard.addListener('keyboardDidShow', (layout) => this.onKeyboard(true, layout))
@@ -47,8 +47,8 @@ export default class DeviceMonitor extends Component {
 
   componentWillUnmount() {
     AppState.removeEventListener('change', this.onAppState)
-    NetInfo.removeEventListener('change', this.onNetInfo)
-    NetInfo.isConnected.removeEventListener('change', this.onConnectivityChange)
+    NetInfo.removeEventListener('connectionChange', this.onNetInfo)
+    NetInfo.isConnected.removeEventListener('connectionChange', this.onConnectivityChange)
     this._keyboardDidHide.remove()
     this._keyboardDidShow.remove()
   }
