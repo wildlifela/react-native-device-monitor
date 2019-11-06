@@ -21,5 +21,8 @@
     "url": "https://github.com/wildlifela/react-native-device-monitor.git"
   },
   "homepage": "https://github.com/wildlifela/react-native-device-monitor",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "react-native-netinfo": "^1.1.0"
+  }
 }
